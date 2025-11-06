@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
@@ -17,7 +18,12 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+    // Company routes
     Route::resource('companies', CompanyController::class);
+
+    // AJAX routes for location
+    Route::get('api/states/{country}', [LocationController::class, 'getStates']);
+    Route::get('api/cities/{state}', [LocationController::class, 'getCities']);
 });
 
 // Redirect root to companies
